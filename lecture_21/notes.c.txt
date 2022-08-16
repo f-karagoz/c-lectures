@@ -1,0 +1,27 @@
+int isprime(int val)
+{
+        int i;
+        double val_sqrt;
+
+        if (val % 2 == 0)
+                return val == 2;
+
+        val_sqrt = sqrt(val);
+        for (i = 3; i <= val_sqrt; i += 2)
+                if (val % i == 0)
+                        return 0;
+
+        return 1;
+}
+
+int main(void)
+{
+        int i;
+
+        for (i = 2; i < 1000; ++i)
+                if (isprime(i))
+                        printf("%d ", i);
+        printf("\n");
+
+        return 0;
+}
