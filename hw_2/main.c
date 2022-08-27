@@ -37,11 +37,10 @@ void app_2(void);
 int get_entry_2(int*);
 void disp_shape(int n);
 
-/*
 void app_3(void);
-int get_entry_3(int*, int*);
+int get_entry_3(int*);
 void print_shape(int n);
-
+/*
 void app_4(void);
 int get_entry_4(int*, int*);
 int sum_digit(unsigned long long val);
@@ -57,7 +56,6 @@ int get_entry_6(int*, int*);
 int intrew(int val);
 */
 
-void app_3(void) {}
 void app_4(void) {}
 void app_5(void) {}
 void app_6(void) {}
@@ -86,7 +84,7 @@ int main()
 			app_2();
 			break;
 		case '3':
-			app_2();
+			app_3();
 			break;
 		case '4':
 			app_2();
@@ -338,6 +336,107 @@ void disp_shape(int n)
 		putchar('\n');
 	}
 
+	putchar('\n');
+}
+
+void app_3(void)
+{
+	int ch;
+
+	printf("APPLICATION-3\nEnter 'h' for command help, 'q' to quit.\n\n");
+
+	for (;;)
+	{
+		printf("APP-3>");
+
+		ch = get_command();
+
+		if (ch == '\n')	//only enter pressed. invalid entry.
+			continue;
+
+		switch (ch)
+		{
+		case 'r':
+		{
+			int n = -1;
+			if (get_entry_3(&n))
+				print_shape(n);
+
+			while (getchar() != '\n')	// clear the plate
+				;
+			ch = '1';
+
+			break;
+		}
+		case 'h':
+			printf("\nThis application draws a reverse diamond shape with '*'s.\nEnter the height of the one part of the diamond.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
+			break;
+		case 'q':
+			printf("Aplication-3 closes...\n\n");
+			goto APP_3_EXIT;
+		default:
+			printf("Invalid command!\n");
+			break;
+		}
+	}
+
+APP_3_EXIT:
+
+	return;
+}
+
+int get_entry_3(int* n_)
+{
+	//printf("\nGet entry called.\n");
+
+	for (;;)
+	{
+		printf("Enter n : ");
+		scanf_s("%d", n_);
+		if (*n_ == -1)
+		{
+			printf("Invalid input.\n");
+			return 0;
+		}
+		else if (*n_ < 0)
+		{
+			printf("Invalid number:%d\n", *n_);
+			return 0;
+		}
+		else
+			return 1;
+	}
+}
+
+void print_shape(int n)
+{
+	putchar('\n');
+
+	for (int i = 0; i < 2 * n; ++i)
+	{
+		if (i < n) // first half
+		{
+			for (int j = 0; j < n - i; j++)
+				putchar('*');
+			for (int j = 0; j < 2*i; j++)
+				putchar(' ');
+			for (int j = 0; j < n - i; j++)
+				putchar('*');
+		}
+		else
+		{
+			for (int j = 0; j < i - n + 1; j++)
+				putchar('*');
+			for (int j = 0; j < (n-1)*2 - 2*(i-n); j++)
+				putchar(' ');
+			for (int j = 0; j < i - n + 1; j++)
+				putchar('*');
+		}
+
+		putchar('\n'); // line ended
+	}
+
+	n = 0; // reset the val
 	putchar('\n');
 }
 
