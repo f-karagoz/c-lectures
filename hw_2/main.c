@@ -240,7 +240,7 @@ void app_2(void)
 
 	for (;;)
 	{
-		printf("APP-1>");
+		printf("APP-2>");
 
 		ch = get_command();
 
@@ -253,7 +253,7 @@ void app_2(void)
 		{
 			int n = -1;
 			if (get_entry_2(&n))
-				//disp_pascal_triangle(n);
+				disp_shape(n);
 
 			while (getchar() != '\n')	// clear the plate
 				;
@@ -299,6 +299,46 @@ int get_entry_2(int* n_)
 		else
 			return 1;
 	}
+}
+
+/*
+* 1 2 3 4 5
+*  2 3 4 5
+*   3 4 5
+*    4 5
+*     5
+*    4 5
+*   3 4 5
+*  2 3 4 5
+* 1 2 3 4 5
+* 
+*/
+
+void disp_shape(int n)
+{
+	putchar('\n');
+
+	for (int i = 0; i < n; i++) // first part
+	{
+		for (int j = 0; j < i; j++) // initial spaces
+			putchar(' ');
+
+		for (int j = i; j < n; j++)
+			printf("%d ", j + 1);
+		putchar('\n');
+	}
+	
+	for (int i = 1; i < n; i++) // second part
+	{
+		for (int j = i; j < n-1; j++) // initial spaces
+			putchar(' ');
+
+		for (int j = n-i; j < n+1; j++)
+			printf("%d ", j);
+		putchar('\n');
+	}
+
+	putchar('\n');
 }
 
 int get_command(void) // used by all
