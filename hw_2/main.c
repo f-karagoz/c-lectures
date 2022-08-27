@@ -40,12 +40,12 @@ void disp_shape(int n);
 void app_3(void);
 int get_entry_3(int*);
 void print_shape(int n);
-/*
+
 void app_4(void);
-int get_entry_4(int*, int*);
+int get_entry_4(unsigned long long*);
 int sum_digit(unsigned long long val);
 
-
+/*
 void app_5(void);
 int get_entry_5(int*, int*);
 unsigned gcd(unsigned a, unsigned b);
@@ -56,7 +56,6 @@ int get_entry_6(int*, int*);
 int intrew(int val);
 */
 
-void app_4(void) {}
 void app_5(void) {}
 void app_6(void) {}
 
@@ -87,7 +86,7 @@ int main()
 			app_3();
 			break;
 		case '4':
-			app_2();
+			app_4();
 			break;
 		case '5':
 			app_2();
@@ -438,6 +437,94 @@ void print_shape(int n)
 
 	n = 0; // reset the val
 	putchar('\n');
+}
+
+void app_4(void)
+{
+	int ch;
+
+	printf("APPLICATION-4\nEnter 'h' for command help, 'q' to quit.\n\n");
+
+	for (;;)
+	{
+		printf("APP-4>");
+
+		ch = get_command();
+
+		if (ch == '\n')	//only enter pressed. invalid entry.
+			continue;
+
+		switch (ch)
+		{
+		case 'r':
+		{
+			long long unsigned val = -1;
+			if (get_entry_4(&val))
+				printf("Sum of digits is: % d\n", sum_digit(val) );
+
+			while (getchar() != '\n')	// clear the plate
+				;
+			ch = '1';
+
+			break;
+		}
+		case 'h':
+			printf("\nThis application calculates the sum of the digits of the numbered entered.\nEnter a number to be calculated.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
+			break;
+		case 'q':
+			printf("Aplication-4 closes...\n\n");
+			goto APP_4_EXIT;
+		default:
+			printf("Invalid command!\n");
+			break;
+		}
+	}
+
+APP_4_EXIT:
+
+	return;
+}
+
+int get_entry_4(unsigned long long* val_)
+{
+	//printf("\nGet entry called.\n");
+
+	for (;;)
+	{
+		printf("Enter a number : ");
+		scanf_s("%llu", val_);
+		if (*val_ == -1)
+		{
+			printf("Invalid input.\n");
+			return 0;
+		}
+		else if (*val_ < 0)
+		{
+			printf("Invalid number:%llu\n", *val_);
+			return 0;
+		}
+		else
+			return 1;
+	}
+}
+
+int sum_digit(unsigned long long val)
+{
+	//printf("Sum digit called for %llu\n", val);
+
+	int retVal = 0;
+
+	while ((val / 10) > 0) // check if we are on the last digit
+	{
+		retVal += (val % 10);
+		val /= 10;
+	}
+		
+
+	retVal += (val % 10); // also sum the last digit
+
+	
+	return retVal; // will be removed
 }
 
 int get_command(void) // used by all
