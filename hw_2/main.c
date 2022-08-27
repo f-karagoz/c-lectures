@@ -1,15 +1,19 @@
 /**
-* @title	CSD C Programlama Kursu HW-2 Cevaplarý
+* @title	CSD C Programlama Kursu HW-2 Cevaplari
 * @author	Furkan Karagoz
 * @date		27 / 8 / 2022
 *
-* @usage	"define" idafesini Q_1, Q_2, Q_3, Q_4 'den biri olarak degistirerek
-*			farkli sorularýn cevaplarýný derleyip kosturabilirsiniz.
+* @usage	Run the code and follow the on screen guides.
 *
-* @todo
+* @todo		In App-1 n = 6+ is not perfect triangle due to double digit numbers
+*				and larger values fail due to high numbers.
+*			bla
+*			bla
+*			bla
+* 
 *
 *
-* @structure
+* @code_structure
 *									MAIN
 *									|
 *	|-------------------------------|-------------------...------|
@@ -23,33 +27,36 @@
 
 #include "stdio.h"
 
-#define Q_1		// CHANGE THIS TO ACCESS TO THE OTHER ANSWERS @guide
-
-#ifdef Q_1
-// zig and zag with walls
-
 int get_command(void);
 
 void app_1(void);
 int get_entry_1(int*);
 void disp_pascal_triangle(int);
 
-/*
 void app_2(void);
-int get_entry_2(int*, int*);
+int get_entry_2(int*);
+void disp_shape(int n);
+
+/*
 void app_3(void);
 int get_entry_3(int*, int*);
+void print_shape(int n);
+
 void app_4(void);
 int get_entry_4(int*, int*);
+int sum_digit(unsigned long long val);
+
+
 void app_5(void);
 int get_entry_5(int*, int*);
+unsigned gcd(unsigned a, unsigned b);
+unsigned lcm(unsigned a, unsigned b);
+
 void app_6(void);
 int get_entry_6(int*, int*);
+int intrew(int val);
 */
 
-void app_0(void);
-int get_entry_0(int* foo, int* barr);
-void app_2(void) {}
 void app_3(void) {}
 void app_4(void) {}
 void app_5(void) {}
@@ -72,14 +79,6 @@ int main()
 
 		switch (ch)
 		{
-		case '0':
-			app_0();
-			/*
-			while (getchar() != '\n')	// clear the plate
-				;
-			ch = '1';
-			*/
-			break;
 		case '1':
 			app_1();
 			break;
@@ -99,7 +98,7 @@ int main()
 			app_2();
 			break;
 		case 'h':
-			printf("\nThis application draws zig zags with '*'s.\nJust enter width and height of the canvas.\n\nCommand list:\n\ta: Enters to the application.\n\tq: Quit from main application.\n\th: Calls help page.\n\n");
+			printf("\nThis application is the interface for HW-2 applications.\n\nCommand list:\n\t1: Enters to the application-1.\n\t1: Enters to the application-2.\n\t1: Enters to the application-2.\n\t3: Enters to the application-3.\n\t4: Enters to the application-4.\n\t5: Enters to the application-5.\n\t6: Enters to the application-6.\n\tq: Quit from main application.\n\th: Calls help page.\n\n");
 			break;
 		case 'q':
 			printf("Program closes...\n\n");
@@ -113,89 +112,6 @@ int main()
 MAIN_EXIT:
 
 	return 0;
-}
-
-void app_0(void)
-{
-	int ch;
-
-	printf("APPLICATION-0\nEnter 'h' for command help, 'q' to quit.\n\n");
-
-	for (;;)
-	{
-		printf("APP-0>");
-
-		ch = get_command();
-
-		if (ch == '\n')	//only enter pressed. invalid entry.
-			continue;
-
-		switch (ch)
-		{
-		case 'r':
-		{
-			int width = -1, height = -1;
-			get_entry_1(&width, &height);
-			//void disp_pascal_triangle(width);
-			// @attention is below still needed?
-			while (getchar() != '\n')	// clear the plate
-				;
-			ch = '1';
-			break;
-		}
-		case 'h':
-			printf("\nThis application draws zig zags with '*'s.\nJust enter width and height of the canvas.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
-			break;
-		case 'q':
-			printf("Aplication-0 closes...\n\n");
-			goto APP_0_EXIT;
-		default:
-			printf("Invalid command!\n");
-			break;
-		}
-	}
-
-APP_0_EXIT:
-
-	return;
-}
-
-int get_entry_0(int* width_, int* height_)
-{
-	printf("\nGet entry 0 called.\n");
-
-	for (;;)
-	{
-		printf("Enter width : ");
-		scanf_s("%d", width_);
-		if (*width_ == -1)
-		{
-			printf("Invalid input.\n");
-			break;
-		}
-		else if (*width_ < 1)
-		{
-			printf("Invalid number:%d\n", *width_);
-			break;
-		}
-		else
-		{
-			printf("Enter height : ");
-			scanf_s("%d", height_);
-			if (*height_ == -1)
-			{
-				printf("Invalid input.\n");
-				break;
-			}
-			else if (*height_ < 1)
-			{
-				printf("Invalid number:%d\n", *height_);
-				break;
-			}
-			else
-				return 1;
-		}
-	}
 }
 
 void app_1(void)
@@ -267,17 +183,122 @@ int get_entry_1(int* n_)
 	}
 }
 
+
+/*
+*  n=5
+*     1
+*    1 1
+*   1 2 1
+*  1 3 3 1
+* 1 4 6 4 1
+* 
+* 
+*/
+
+long long int factorial(int x_)
+{
+	//printf("Factorial of %d is", x_);
+	int result = 1;
+
+	for (; x_ > 1; x_--)
+		result *= x_;
+	//printf(" %d\n", result);
+	return result;
+}
+
+int combination(int n_, int r_)
+{
+	return (factorial(n_) / (factorial(r_) * factorial(n_ - r_)));
+}
+
 void disp_pascal_triangle(int n) // used by app-1
 {
 	putchar('\n');
 
 	// code here
-	printf("Drawing Pascal triangle for: %d\n", n);
+	printf("Drawing Pascal triangle for: %d\n\n", n);
 
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = i; j < n; j++)
+			putchar(' ');
 
+		for (int j = 0; j < i + 1; j++)
+			printf(" %d", combination(i, j));
+		putchar('\n');
+	}
 
 	putchar('\n');
 	return;
+}
+
+void app_2(void)
+{
+	int ch;
+
+	printf("APPLICATION-2\nEnter 'h' for command help, 'q' to quit.\n\n");
+
+	for (;;)
+	{
+		printf("APP-1>");
+
+		ch = get_command();
+
+		if (ch == '\n')	//only enter pressed. invalid entry.
+			continue;
+
+		switch (ch)
+		{
+		case 'r':
+		{
+			int n = -1;
+			if (get_entry_2(&n))
+				//disp_pascal_triangle(n);
+
+			while (getchar() != '\n')	// clear the plate
+				;
+			ch = '1';
+
+			break;
+		}
+		case 'h':
+			printf("\nThis application draws an hourglass with numbers '*'s.\nEnter the height of the one part of the hourglass.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
+			break;
+		case 'q':
+			printf("Aplication-2 closes...\n\n");
+			goto APP_2_EXIT;
+		default:
+			printf("Invalid command!\n");
+			break;
+		}
+	}
+
+APP_2_EXIT:
+
+	return;
+}
+
+int get_entry_2(int* n_)
+{
+	//printf("\nGet entry called.\n");
+
+	for (;;)
+	{
+		printf("Enter n : ");
+		scanf_s("%d", n_);
+		if (*n_ == -1)
+		{
+			printf("Invalid input.\n");
+			return 0;
+		}
+		else if (*n_ < 0)
+		{
+			printf("Invalid number:%d\n", *n_);
+			return 0;
+		}
+		else
+			return 1;
+	}
 }
 
 int get_command(void) // used by all
@@ -293,4 +314,3 @@ int get_command(void) // used by all
 
 	return ch;
 }
-#endif
