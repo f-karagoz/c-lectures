@@ -7,6 +7,7 @@
 *
 * @todo		In App-1 n = 6+ is not perfect triangle due to double digit numbers
 *				and larger values fail due to high numbers.
+*			For App-4 package the prime dividor alogrith as a function. Then use it for gcd() and lcm()
 *			bla
 *			bla
 *			bla
@@ -14,18 +15,24 @@
 *
 *
 * @code_structure
-*									MAIN
-*									|
-*	|-------------------------------|-------------------...------|
-*	app_1							app_2				...		app_6
-*	- get_entry_1					- get_entry_2		...		- get_entry_6
-*	-- display_pascal_triangle		-- xxx				...		-- xxx
-*				
 * 
+*	MAIN
+*	|
+*	|-------------------------------|-------------------|-------------------|-------------------|-------------------|
+*	app_1							app_2				app_3				app_4				app_5				app_6
+*	- get_entry_1					- get_entry_2		- get_entry_3		- get_entry_4		- get_entry_5		- get_entry_6
+*	-- display_pascal_triangle		-- disp_shape		- print_shape		-- sum_digit		-- gcd				-- intrew
+*	-- factorial																				-- lcm
+*	-- combination
+*				
 */
 
 
 #include "stdio.h"
+#include "math.h"		// used by app-5
+
+#define MAX_PRIME_COUNT 200		// Max nummber of prime numbers to be included into the prime array, app-5
+#define MAX_P_D_ARRAY_SIZE 100	// Max size of prime dividor array, app-5
 
 int get_command(void);
 
@@ -45,19 +52,21 @@ void app_4(void);
 int get_entry_4(unsigned long long*);
 int sum_digit(unsigned long long val);
 
-/*
 void app_5(void);
-int get_entry_5(int*, int*);
+int get_entry_5(unsigned*, unsigned*);
 unsigned gcd(unsigned a, unsigned b);
 unsigned lcm(unsigned a, unsigned b);
-
+/*
 void app_6(void);
 int get_entry_6(int*, int*);
 int intrew(int val);
 */
 
-void app_5(void) {}
 void app_6(void) {}
+
+/****************************************************************
+ *							MAIN								*
+*****************************************************************/
 
 int main()
 {
@@ -89,10 +98,10 @@ int main()
 			app_4();
 			break;
 		case '5':
-			app_2();
+			app_5();
 			break;
 		case '6':
-			app_2();
+			app_6();
 			break;
 		case 'h':
 			printf("\nThis application is the interface for HW-2 applications.\n\nCommand list:\n\t1: Enters to the application-1.\n\t1: Enters to the application-2.\n\t1: Enters to the application-2.\n\t3: Enters to the application-3.\n\t4: Enters to the application-4.\n\t5: Enters to the application-5.\n\t6: Enters to the application-6.\n\tq: Quit from main application.\n\th: Calls help page.\n\n");
@@ -110,6 +119,10 @@ MAIN_EXIT:
 
 	return 0;
 }
+
+/****************************************************************
+ *							APP - 1								*
+*****************************************************************/
 
 void app_1(void)
 {
@@ -229,6 +242,10 @@ void disp_pascal_triangle(int n) // used by app-1
 	return;
 }
 
+/****************************************************************
+ *							APP - 2								*
+*****************************************************************/
+
 void app_2(void)
 {
 	int ch;
@@ -338,6 +355,10 @@ void disp_shape(int n)
 	putchar('\n');
 }
 
+/****************************************************************
+ *							APP - 3								*
+*****************************************************************/
+
 void app_3(void)
 {
 	int ch;
@@ -439,6 +460,10 @@ void print_shape(int n)
 	putchar('\n');
 }
 
+/****************************************************************
+ *							APP - 4								*
+*****************************************************************/
+
 void app_4(void)
 {
 	int ch;
@@ -519,13 +544,121 @@ int sum_digit(unsigned long long val)
 		retVal += (val % 10);
 		val /= 10;
 	}
-		
+
 
 	retVal += (val % 10); // also sum the last digit
 
-	
+
 	return retVal; // will be removed
 }
+
+/****************************************************************
+ *							APP - 5								*
+*****************************************************************/
+
+void app_5(void)
+{
+	int ch;
+
+	printf("APPLICATION-5\nEnter 'h' for command help, 'q' to quit.\n\n");
+
+	for (;;)
+	{
+		printf("APP-5>");
+
+		ch = get_command();
+
+		if (ch == '\n')	//only enter pressed. invalid entry.
+			continue;
+
+		switch (ch)
+		{
+		case 'r':
+		{
+			unsigned a = -1, b = -1;
+			if (get_entry_5(&a, &b))
+			{
+				printf("GCD of %u and %u is: %d\n", a, b, gcd(a, b));
+				printf("LCM of %u and %u is: %d\n", a, b, lcm(a, b));
+			}
+			else
+				__noop;
+
+			while (getchar() != '\n')	// clear the plate
+				;
+			ch = '1';
+
+			break;
+		}
+		case 'h':
+			printf("\nTHis application calculates the GCD and LCL of the entered numbers.\nEnter a numbers to be calculated.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
+			break;
+		case 'q':
+			printf("Aplication-4 closes...\n\n");
+			goto APP_5_EXIT;
+		default:
+			printf("Invalid command!\n");
+			break;
+		}
+	}
+
+APP_5_EXIT:
+
+	return;
+}
+int get_entry_5(unsigned* a_, unsigned* b_)
+{
+	//printf("\nGet entry called.\n");
+
+	for (;;)
+	{
+		printf("Enter first number : ");
+		scanf_s("%u", a_);
+		if (*a_ == -1)
+		{
+			printf("Invalid input.\n");
+			return 0;
+		}
+		else if (*a_ < 2)
+		{
+			printf("Invalid number:%u\n", *a_);
+			return 0;
+		}
+		else
+		{
+			printf("Enter second number : ");
+			scanf_s("%u", b_);
+			if (*b_ == -1)
+			{
+				printf("Invalid input.\n");
+				return 0;
+			}
+			else if (*b_ < 2)
+			{
+				printf("Invalid number:%u\n", *b_);
+				return 0;
+			}
+			else
+				return 1;
+		}	
+	}
+}
+
+unsigned gcd(unsigned a, unsigned b)
+{
+	int R;
+	while ((a % b) > 0) {
+		R = a % b;
+		a = b;
+		b = R;
+	}
+	return b;
+}
+unsigned lcm(unsigned a, unsigned b)
+{
+	return ( a * b / gcd(a, b) );
+}
+
 
 int get_command(void) // used by all
 {
