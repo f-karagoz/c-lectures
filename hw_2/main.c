@@ -584,10 +584,10 @@ void app_5(void)
 			break;
 		}
 		case 'h':
-			printf("\nTHis application calculates the GCD and LCL of the entered numbers.\nEnter a numbers to be calculated.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
+			printf("\nThis application calculates the GCD and LCM of the entered numbers.\nEnter a numbers to be calculated.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
 			break;
 		case 'q':
-			printf("Aplication-4 closes...\n\n");
+			printf("Aplication-5 closes...\n\n");
 			goto APP_5_EXIT;
 		default:
 			printf("Invalid command!\n");
