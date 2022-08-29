@@ -29,10 +29,6 @@
 
 
 #include "stdio.h"
-#include "math.h"		// used by app-5
-
-#define MAX_PRIME_COUNT 200		// Max nummber of prime numbers to be included into the prime array, app-5
-#define MAX_P_D_ARRAY_SIZE 100	// Max size of prime dividor array, app-5
 
 int get_command(void);
 
@@ -56,13 +52,10 @@ void app_5(void);
 int get_entry_5(unsigned*, unsigned*);
 unsigned gcd(unsigned a, unsigned b);
 unsigned lcm(unsigned a, unsigned b);
-/*
-void app_6(void);
-int get_entry_6(int*, int*);
-int intrew(int val);
-*/
 
-void app_6(void) {}
+void app_6(void);
+int get_entry_6(int*);
+int intrew(int val);
 
 /****************************************************************
  *							MAIN								*
@@ -657,6 +650,117 @@ unsigned gcd(unsigned a, unsigned b)
 unsigned lcm(unsigned a, unsigned b)
 {
 	return ( a * b / gcd(a, b) );
+}
+
+/****************************************************************
+ *							APP - 6								*
+*****************************************************************/
+
+void app_6(void)
+{
+	int ch;
+
+	printf("APPLICATION-6\nEnter 'h' for command help, 'q' to quit.\n\n");
+
+	for (;;)
+	{
+		printf("APP-6>");
+
+		ch = get_command();
+
+		if (ch == '\n')	//only enter pressed. invalid entry.
+			continue;
+
+		switch (ch)
+		{
+		case 'r':
+		{
+			int n = -1;
+			if (get_entry_6(&n))
+				printf("Reversed: %d\n", intrew(n));
+
+			while (getchar() != '\n')	// clear the plate
+				;
+			ch = '1';
+
+			break;
+		}
+		case 'h':
+			printf("\nThis application reverses the digits of the entered number\nwhile preserving the sign of the number.\n\nCommand list:\n\tr: Runs the application.\n\tq: Quits to the main application.\n\th: Calls help page.\n\n");
+			break;
+		case 'q':
+			printf("Aplication-6 closes...\n\n");
+			goto APP_6_EXIT;
+		default:
+			printf("Invalid command!\n");
+			break;
+		}
+	}
+
+APP_6_EXIT:
+
+	return;
+}
+
+int get_entry_6(int* n_)
+{
+	//printf("\nGet entry called.\n");
+
+	for (;;)
+	{
+		printf("Enter a number : ");
+		scanf_s("%d", n_);
+		/*
+		if (*n_ == -1)
+		{
+			printf("Invalid input.\n");
+			return 0;
+		}
+		else if (*n_ < 0)
+		{
+			printf("Invalid number:%d\n", *n_);
+			return 0;
+		}
+		else
+			return 1;
+			*/
+		return 1;
+	}
+}
+
+int intrew(int val)
+{
+	int sign = 0;
+	int reversed[100];
+	int result = 0;
+
+	(val < 0) ? (sign = -1) : (sign = 1);
+
+	val *= sign;	// makes val positive
+
+	/*
+	* 1234
+	* reversed[] = {4,3,2}
+	* 
+	*/
+	int i = 0;
+	for (; (val / 10) != 0; i++)	// will fail if only one digit left
+	{
+		reversed[i] = (val % 10);
+		val /= 10;
+	}
+	reversed[i] = (val % 10); // reversed[] = {4,3,2,1}
+
+	for (int j = 0; j < i; j++)
+	{
+		result += reversed[j];
+		result *= 10;
+	}
+	result += reversed[i];
+
+	result *= sign;
+
+	return result; // will be changed
 }
 
 
