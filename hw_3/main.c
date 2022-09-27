@@ -1,4 +1,43 @@
+/*
+* title:		CSD C Programming Course HW-3
+* instructor:	Kaan Arslan
+* author:		Furkan Karagoz
+* date:			28 / 9 / 2022
+* 
+*/
+
 #include "stdio.h"
+
+// @usage: change this definion between APP_1, APP_2, APP_3, and APP_4
+//			to compile for 4 different question answers
+#define APP_4
+
+#ifdef APP_1
+// crown
+
+int main(void)
+{
+	return 0;
+}
+
+#elif defined APP_2
+// armstrong number
+
+int main(void)
+{
+	return 0;
+}
+
+#elif defined APP_3
+// diamond of chars
+
+int main(void)
+{
+	return 0;
+}
+
+#elif defined APP_4
+// 3 different pi number calculation formulas
 
 long double pow(long double x, int y);
 long double factorial(int x);
@@ -91,3 +130,4 @@ long double factorial(int x)
 
 	return result;
 }
+#endif
