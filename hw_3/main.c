@@ -7,10 +7,12 @@
 */
 
 #include "stdio.h"
+long double pow(long double x, int y);
+long double factorial(int x);
 
 // @usage: change this definion between APP_1, APP_2, APP_3, and APP_4
 //			to compile for 4 different question answers
-#define APP_4
+#define APP_2
 
 #ifdef APP_1
 // crown
@@ -22,10 +24,103 @@ int main(void)
 
 #elif defined APP_2
 // armstrong number
+int is_armstrong(int val);
+void print_armstrongs(int n);
 
 int main(void)
 {
+	int val;
+	while (1)
+	{
+		printf("Enter 0 to printf Armstong numbers.\n");
+		printf("Enter a number to check for Armstrong number : ");
+		scanf_s("%d", &val);
+
+		if (val == 0)
+		{
+			print_armstrongs(1000000);
+		}
+		else
+		{
+			if (is_armstrong(val))
+				printf("Number %d is a Armstrong number.\n", val);
+			else
+				printf("Number %d is NOT a Armstrong number.\n", val);
+		}
+		//printf("test %f\n", pow(0,3));
+	}
 	return 0;
+}
+
+int is_armstrong(int val_)
+{
+	// highest int 2147483647 has 10 digits
+
+	int val = val_;
+	int armstrongComputedVal = 0;
+	int totalDigits = 0;
+
+	if (val == 0)
+		return 0;
+
+	int digits[10];
+
+	for (int i = 0; i < 10; i++)
+	{
+		digits[i] = val % 10;
+		//printf("Digit[%d]: %d\t", i, digits[i]);
+		val /= 10;
+	}
+
+	for (int i = 10; i > 0; i--)
+	{
+		if (digits[i-1] != 0)
+		{
+			totalDigits = i;
+			break;
+		}
+	}
+
+	//printf("Total digits: %d\n", totalDigits);
+
+	for (int i = 0; i < totalDigits; i++)
+	{
+		armstrongComputedVal += pow(digits[i], totalDigits);
+	}
+
+	if (armstrongComputedVal == val_)
+		return 1;
+	else
+		return 0;
+}
+
+void print_armstrongs(int n)
+{
+	if (n < 1)
+	{
+		printf("Invalid input\n");
+		return;
+	}
+
+	int number = 0;
+
+	putchar('\n');
+
+	while (1)
+	{
+
+		if ( is_armstrong(number) )
+			printf("%d ", number);
+
+		if (number == n)
+		{
+			putchar('\n');
+			return;
+		}
+
+		number++;
+		
+	}
 }
 
 #elif defined APP_3
@@ -39,8 +134,6 @@ int main(void)
 #elif defined APP_4
 // 3 different pi number calculation formulas
 
-long double pow(long double x, int y);
-long double factorial(int x);
 double newton_pi(int k); 
 double somayaji_pi(int n);
 double bailey_borwein_plouffe_pi(int k);
@@ -110,6 +203,7 @@ double bailey_borwein_plouffe_pi(int k)
 		pi += ( ( ( 4. / (8*n+1) ) - ( 2. / (8*n+4) ) - ( 1. / (8*n+5) ) - ( 1. / (8*n+6) ) ) / pow(16, n) );
 	}
 }
+#endif
 
 long double pow(long double x, int y)
 {
@@ -130,4 +224,3 @@ long double factorial(int x)
 
 	return result;
 }
-#endif
