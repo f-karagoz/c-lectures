@@ -1,0 +1,43 @@
+
+1)  Sýnýfta üç basamaklý bir sayýyý char türden bir dizi içerisine yazý biçiminde yazdýran num2text isimli bir fonksiyon yazmýþtýk.Aslýnda üç basamaklý bir sayýyý yazdýrabilten sonra bunun genelleþtirilmesi kolaydýr.Her türlü sayýyý bu biçimde yazýya dönüþtüren fonksiyonu num2text ismiyle yazýnýz.Fonksiyonun parametrik yapýsý þöyle olmalýdýr :
+
+char* num2text(unsigned long long number, char* buf, size_t bufsize);
+
+unsigned long long türünün katrilyar mertebesinde bir sayý olduðuna dikkat ediniz.Bu türün üst sýnýrý þöyledir :
+
+18, 446, 744, 073, 709, 551, 615
+
+Fonksiyonun ikinci parametresi yazýnýn yerleþtirileceði char türden dizinin adresini almaktadýr.Üçüncü parametre ikinci parametredeki dizinin uzunluðunu belirtir.Bu tür parametreler "güvenlik parametresi" olarak kullanýlmaktadýr.Yani diziyi taþýrmayý engellemktedir.Fonksiyon en fazla bufsize – 1 tane karakteri diziye yerleþtirip null karakteri ekleyerek iþlemini sonlandýrmalýdýr.Böylece programcý diziyi küçük açmýþ olsa bile dizi taþýrýlmayacaktýr.Fonksiyonun geri dönüþ deðeri birinci parametresiyle belirtilen adresin aynýsýdýr.
+
+2) Bir rasyonel sayýyý a / b biçiminde ekrana(stdout dosyasýna) yazdýran disp_rational isimli fonksiyonu yazýnýz.Fonksiyonun prototipi þöyledir :
+
+void disp_ratio(int num, int denom);
+
+Yazýrma iþleminde sadelþtirme yapýlmalýdýr.
+
+Bazý rasyonel deðerlerin nasýl yazdýrýlma örnekleri þöyledir :
+
+disp_ratio(1, 3) = > 1 / 3
+disp_ratio(2, 4) = > 1 / 2
+disp_ratio(2, 0) = > infinite
+disp_ratio(3, 1) = > 3
+disp_ratio(0, 5) = > 0
+disp_ratio(-1, 5) = > -1 / 5
+disp_ratio(1, -5) = > -1 / 5
+dispratio(-1, -5) = > 1 / 5
+
+3) Bir karmaþýk sayýyý ekrana(stdout dosyasýna) yazdýran disp_complex isimli fonksiyonu yazýnýz.Fonksiyonun prototipi þöyledir :
+
+void disp_complex(int real, int imag);
+
+Fonksiyonun örnek çaðrýmlarýna karþý çýktýlarý þöyle olmalýdýr :
+
+disp_complex(1, 3) = > 1 + 3i
+disp_complex(5, 1) = > 1 + i
+disp_complex(-1, -3) = > -1 - 3i
+disp_complex(3, 0) = > 3
+disp_complex(0, 3) = > 3i
+disp_complex(0, 1) = > i
+
+Çözümleri aslank@csystem.org adresine iletiniz...
+
