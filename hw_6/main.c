@@ -1,13 +1,10 @@
 #include <stdio.h>
-
-#define _CRT_SECURE_NO_WARNINGS
+#include <string.h>
 
 #define APP_1
 
 #ifdef APP_1
-#include <string.h>
 #define BUFFER_SIZE			100
-
 char* num2text(unsigned long long number, char* buf, size_t bufsize);
 
 int main(void)
@@ -19,9 +16,14 @@ int main(void)
 
 	//strcat(buffer, "testt");
 
-	num2text(999, buffer, BUFFER_SIZE );
+	num2text(123, buffer, BUFFER_SIZE);
 
 	puts(buffer);
+
+	char test[BUFFER_SIZE] = "";
+	int test_char_count = sprintf(test, "%llu", 18446744073709551615);
+	puts(test);
+	printf("%d", test_char_count);
 
 	return 0;
 }
@@ -30,12 +32,54 @@ char* num2text(unsigned long long number, char* buf, size_t bufsize)
 {
 	char* ones[] = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 	char* tens[] = { "", "ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-	char* hundreds[] = { "", "hundred", "thousend", "million", "billion", "trillion", "quadrillion", "quintrillion" };
+	char* larges[] = { "", "thousend", "million", "billion", "trillion", "quadrillion", "quintrillion" };
 
 	if (number == 0)
-		strcpy_s(buf, bufsize, "zero");
+		strcpy(buf, "zero");
 	else
 	{
+		char strNumber[20];
+		int nDigit = sprintf(strNumber, "%llu", number);
+		printf("Entered n: %s\n", strNumber);				// debug
+		printf("nDigit: %d\n", nDigit);						// debug
+
+		int index = 0;
+		int offset = nDigit % 3;
+		int nThousends = nDigit / 3;
+
+		// loop here
+		for (int i = 0; i < nDigit; ++i)
+		{
+			int foo = i % 3; // impelement offste here
+			switch (foo)
+			{
+			case 0:
+				index += sprintf(buf + index, "%s", ones[strNumber[i] - '0']);
+				index += sprintf(buf + index, " hundred");
+				break;
+
+			case 1:
+				index += sprintf(buf + index, "%s", tens[strNumber[i] - '0']);
+				break;
+
+			case 2:
+				index += sprintf(buf + index, "%s", ones[strNumber[i] - '0']);
+				break;
+			}
+
+			nN
+			index += sprintf(buf + index, "%s", larges[ ]);
+
+			if (i + 1 != nDigit)
+				index += sprintf(buf + index, " ");
+			
+
+			
+			
+
+		}
+		
+		/*
 		while (number != 0)
 		{
 
@@ -57,24 +101,27 @@ char* num2text(unsigned long long number, char* buf, size_t bufsize)
 				strcat(buf, ones[number]);
 				number = 0;
 			}
-			
+
 		}
+		*/
 	}
 
 	return buf;
 }
 
 #elif defined APP_2
+
 int main(void)
 {
-	printf("APP-2\n");
+	printf("App - 2\n");
 	return 0;
 }
 
 #elif defined APP_3
+
 int main(void)
 {
-	printf("APP-3\n");
+	printf("App - 3\n");
 	return 0;
 }
 
