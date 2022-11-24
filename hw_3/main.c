@@ -4,11 +4,14 @@
 * author:		Furkan Karagoz
 * date:			28 / 9 / 2022
 * 
+* TASK 1:	N/A
+* TASK 2:	DONE
+* TASK 3:	N/A
+* TASK 4:	DONE
+* 
 */
 
 #include "stdio.h"
-long double pow(long double x, int y);
-long double factorial(int x);
 
 // @usage: change this definion between APP_1, APP_2, APP_3, and APP_4
 //			to compile for 4 different question answers
@@ -24,6 +27,7 @@ int main(void)
 
 #elif defined APP_2
 // armstrong number
+long double pow(long double x, int y);
 int is_armstrong(int val);
 void print_armstrongs(int n);
 
@@ -133,7 +137,8 @@ int main(void)
 
 #elif defined APP_4
 // 3 different pi number calculation formulas
-
+long double pow(long double x, int y);
+long double factorial(int x);
 double newton_pi(int k); 
 double somayaji_pi(int n);
 double bailey_borwein_plouffe_pi(int k);
