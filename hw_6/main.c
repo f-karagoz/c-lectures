@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#define APP_2
+// To compile for different HW tasks
+// Chanage between APP-1, APP-2 and APP-3 and compile again
+#define APP_1
 
 #ifdef APP_1
 // Function that converts the given number to text
@@ -190,11 +192,52 @@ int gcd(int a, int b)
 }
 
 #elif defined APP_3
+void disp_complex(int real, int imag);
 
 int main(void)
 {
 	printf("App - 3\n");
+
+	int a, b;
+
+	while (1)
+	{
+		printf("Real: ");
+		scanf("%d", &a);
+		printf("Imaginary: ");
+		scanf("%d", &b);
+
+		disp_complex(a, b);
+		puts("\n");
+	}
+
 	return 0;
+}
+
+void disp_complex(int real, int imag)
+{
+	if (real == 0 && imag == 0)
+	{
+		printf("0");
+		return;
+	}
+	else
+	{
+		if (real == 0)
+		{
+			printf("%di", imag);
+		}
+		else if (imag == 0)
+		{
+			printf("%d", real);
+		}
+		else
+		{
+			printf("%d %s %di", real, imag < 0 ? "-" : "+", imag < 0 ? imag * -1 : imag);
+		}
+			
+	}
+	return;
 }
 
 #endif
