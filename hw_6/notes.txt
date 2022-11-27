@@ -9,7 +9,8 @@ unsigned long long türünün katrilyar mertebesinde bir sayý olduðuna dikkat edini
 
 Fonksiyonun ikinci parametresi yazýnýn yerleþtirileceði char türden dizinin adresini almaktadýr.Üçüncü parametre ikinci parametredeki dizinin uzunluðunu belirtir.Bu tür parametreler "güvenlik parametresi" olarak kullanýlmaktadýr.Yani diziyi taþýrmayý engellemktedir.Fonksiyon en fazla bufsize – 1 tane karakteri diziye yerleþtirip null karakteri ekleyerek iþlemini sonlandýrmalýdýr.Böylece programcý diziyi küçük açmýþ olsa bile dizi taþýrýlmayacaktýr.Fonksiyonun geri dönüþ deðeri birinci parametresiyle belirtilen adresin aynýsýdýr.
 
-2) Bir rasyonel sayýyý a / b biçiminde ekrana(stdout dosyasýna) yazdýran disp_rational isimli fonksiyonu yazýnýz.Fonksiyonun prototipi þöyledir :
+2) Bir rasyonel sayýyý a / b biçiminde ekrana(stdout dosyasýna) yazdýran
+disp_rational isimli fonksiyonu yazýnýz.Fonksiyonun prototipi þöyledir :
 
 void disp_ratio(int num, int denom);
 
@@ -26,7 +27,8 @@ disp_ratio(-1, 5) = > -1 / 5
 disp_ratio(1, -5) = > -1 / 5
 dispratio(-1, -5) = > 1 / 5
 
-3) Bir karmaþýk sayýyý ekrana(stdout dosyasýna) yazdýran disp_complex isimli fonksiyonu yazýnýz.Fonksiyonun prototipi þöyledir :
+3) Bir karmaþýk sayýyý ekrana(stdout dosyasýna) yazdýran
+disp_complex isimli fonksiyonu yazýnýz.Fonksiyonun prototipi þöyledir :
 
 void disp_complex(int real, int imag);
 

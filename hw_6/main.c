@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define APP_1
+#define APP_2
 
 #ifdef APP_1
 // Function that converts the given number to text
@@ -106,10 +106,87 @@ char* num2text(unsigned long long number, char* buf, size_t bufsize)
 
 #elif defined APP_2
 
+void disp_ratio(int num, int denom);
+int gcd(int a, int b);
+
+
 int main(void)
 {
 	printf("App - 2\n");
+	int a, b;
+
+	while (1)
+	{
+		printf("Numerator: ");
+		scanf("%d", &a);
+		printf("Denumerator: ");
+		scanf("%d", &b);
+
+		disp_ratio(a, b);
+		puts("\n");
+	}
 	return 0;
+}
+
+void disp_ratio(int num, int denom)
+{
+	if (num == 0)
+	{
+		if (denom == 0)
+		{
+			printf("Undefined");
+			return;
+		}
+		printf("0");
+		return;
+	}
+	else if (denom == 0)
+	{
+		printf("Inifinite");
+		return;
+	}
+	else
+	{
+		int sign = 1;
+
+		if (num < 0)
+		{
+			sign *= -1;
+			num *= -1;
+		}
+
+		if (denom < 0)
+		{
+			sign *= -1;
+			denom *= -1;
+		}
+
+		if (num % denom == 0)
+		{
+			num /= denom;
+			printf("%s%d", sign == -1 ? "-" : "", num);
+			return;
+		}
+		else
+		{
+			int divGcd = gcd(num, denom);
+			num /= divGcd;
+			denom /= divGcd;
+			printf("%s%d / %d", sign == -1 ? "-" : "", num, denom);
+		}
+	}
+	return;
+}
+
+int gcd(int a, int b)
+{
+	int R;
+	while ((a % b) > 0) {
+		R = a % b;
+		a = b;
+		b = R;
+	}
+	return b;
 }
 
 #elif defined APP_3
