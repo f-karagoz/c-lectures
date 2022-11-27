@@ -9,101 +9,73 @@ char* num2text(unsigned long long number, char* buf, size_t bufsize);
 
 int main(void)
 {
-	printf("APP-1\n");
-
 	char buffer[BUFFER_SIZE] = "";
-	//strcpy_s(buffer, BUFFER_SIZE, "tested" );
 
-	//strcat(buffer, "testt");
-
-	num2text(123, buffer, BUFFER_SIZE);
+	num2text(1000456, buffer, BUFFER_SIZE);
 
 	puts(buffer);
-
-	char test[BUFFER_SIZE] = "";
-	int test_char_count = sprintf(test, "%llu", 18446744073709551615);
-	puts(test);
-	printf("%d", test_char_count);
 
 	return 0;
 }
 
 char* num2text(unsigned long long number, char* buf, size_t bufsize)
 {
-	char* ones[] = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-	char* tens[] = { "", "ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-	char* larges[] = { "", "thousend", "million", "billion", "trillion", "quadrillion", "quintrillion" };
+	char* ones[] = { "", "bir", "iki", "uc", "dort", "bes", "alti", "yedi", "sekiz", "dokuz" };
+	char* tens[] = { "", "on", "yirmi", "otuz", "kirk", "elli", "altmis", "yetmis", "seksen", "doksan" };
+	char* thousends[] = { "", "bin", "milyon", "milyar", "trilyon", "kuantilyon", "kuintilyon" };
 
 	if (number == 0)
-		strcpy(buf, "zero");
+		strcpy(buf, "sifir");
 	else
 	{
 		char strNumber[20];
 		int nDigit = sprintf(strNumber, "%llu", number);
-		printf("Entered n: %s\n", strNumber);				// debug
-		printf("nDigit: %d\n", nDigit);						// debug
-
-		int index = 0;
+		int indexBuf = 0;
+		int indexDigit = 0;
 		int offset = nDigit % 3;
-		int nThousends = nDigit / 3;
+		int switcher;
+		int nThousends = offset == 0 ? nDigit / 3 - 1 : nDigit / 3;
 
-		// loop here
-		for (int i = 0; i < nDigit; ++i)
+		// loop
+		for (; indexDigit < nDigit; ++indexDigit)
 		{
-			int foo = i % 3; // impelement offste here
-			switch (foo)
+			switcher = (indexDigit - offset) % 3;
+
+			switch ( switcher < 0 ? switcher + 3 : switcher)
 			{
 			case 0:
-				index += sprintf(buf + index, "%s", ones[strNumber[i] - '0']);
-				index += sprintf(buf + index, " hundred");
+				if (strNumber[indexDigit] != '1')
+					indexBuf += sprintf(buf + indexBuf, "%s ", ones[strNumber[indexDigit] - '0']);
+				if (strNumber[indexDigit] != '0')
+					indexBuf += sprintf(buf + indexBuf, "%s", "yuz");
 				break;
-
+				
 			case 1:
-				index += sprintf(buf + index, "%s", tens[strNumber[i] - '0']);
+				indexBuf += sprintf(buf + indexBuf, "%s ", tens[strNumber[indexDigit] - '0']);
 				break;
 
 			case 2:
-				index += sprintf(buf + index, "%s", ones[strNumber[i] - '0']);
+				indexBuf += sprintf(buf + indexBuf, "%s ", ones[strNumber[indexDigit] - '0']);
+
+				if (nThousends != 0)
+				{
+					int printThousends = 0;
+					for (int j = 0; j < 3 && indexDigit - j >= 0; ++j)
+						if (strNumber[indexDigit - j] != '0')
+							printThousends = 1;
+
+					if (printThousends)
+						indexBuf += sprintf(buf + indexBuf, "%s ", thousends[nThousends]);
+					nThousends--;
+				}
+				break;
+
+			default:
+				indexBuf += sprintf(buf + indexBuf, "%s ", "ERROR");
 				break;
 			}
-
-			nN
-			index += sprintf(buf + index, "%s", larges[ ]);
-
-			if (i + 1 != nDigit)
-				index += sprintf(buf + index, " ");
-			
-
-			
-			
-
 		}
 		
-		/*
-		while (number != 0)
-		{
-
-			if (number > 99)
-			{
-				strcat(buf, ones[number / 100]);
-				strcat(buf, " hundred");
-				number %= 100;
-			}
-			else if (number > 9)
-			{
-				strcat(buf, " ");
-				strcat(buf, tens[number / 10]);
-				number %= 10;
-			}
-			else
-			{
-				strcat(buf, " ");
-				strcat(buf, ones[number]);
-				number = 0;
-			}
-
-		}
-		*/
 	}
 
 	return buf;
