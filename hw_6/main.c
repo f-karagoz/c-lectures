@@ -4,16 +4,25 @@
 #define APP_1
 
 #ifdef APP_1
+// Function that converts the given number to text
+// Known bugs: "bir bin"
+
 #define BUFFER_SIZE			100
 char* num2text(unsigned long long number, char* buf, size_t bufsize);
 
 int main(void)
 {
+	unsigned long long number = 0;
 	char buffer[BUFFER_SIZE] = "";
+	while (1)
+	{
+		printf("Enter a number: ");
+		scanf("%llu", &number);
 
-	num2text(1000456, buffer, BUFFER_SIZE);
+		num2text(number, buffer, BUFFER_SIZE);
 
-	puts(buffer);
+		puts(buffer);
+	}
 
 	return 0;
 }
@@ -45,17 +54,31 @@ char* num2text(unsigned long long number, char* buf, size_t bufsize)
 			{
 			case 0:
 				if (strNumber[indexDigit] != '1')
-					indexBuf += sprintf(buf + indexBuf, "%s ", ones[strNumber[indexDigit] - '0']);
+				{
+					if (strNumber[indexDigit] != '0' && indexDigit != 0)
+						indexBuf += sprintf(buf + indexBuf, " ");
+					indexBuf += sprintf(buf + indexBuf, "%s", ones[strNumber[indexDigit] - '0']);
+				}
+					
 				if (strNumber[indexDigit] != '0')
+				{
+					if (indexDigit != 0)
+						indexBuf += sprintf(buf + indexBuf, " ");
 					indexBuf += sprintf(buf + indexBuf, "%s", "yuz");
+				}
+					
 				break;
 				
 			case 1:
-				indexBuf += sprintf(buf + indexBuf, "%s ", tens[strNumber[indexDigit] - '0']);
+				if (strNumber[indexDigit] != '0' && indexDigit != 0)
+					indexBuf += sprintf(buf + indexBuf, " ");
+				indexBuf += sprintf(buf + indexBuf, "%s", tens[strNumber[indexDigit] - '0']);
 				break;
 
 			case 2:
-				indexBuf += sprintf(buf + indexBuf, "%s ", ones[strNumber[indexDigit] - '0']);
+				if (strNumber[indexDigit] != '0' && indexDigit != 0)
+					indexBuf += sprintf(buf + indexBuf, " ");
+				indexBuf += sprintf(buf + indexBuf, "%s", ones[strNumber[indexDigit] - '0']);
 
 				if (nThousends != 0)
 				{
@@ -65,7 +88,7 @@ char* num2text(unsigned long long number, char* buf, size_t bufsize)
 							printThousends = 1;
 
 					if (printThousends)
-						indexBuf += sprintf(buf + indexBuf, "%s ", thousends[nThousends]);
+						indexBuf += sprintf(buf + indexBuf, " %s", thousends[nThousends]);
 					nThousends--;
 				}
 				break;
