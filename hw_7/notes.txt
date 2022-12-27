@@ -1,0 +1,35 @@
+C - Input and Output
+
+C programming treats all the devices as files. Devices such as displays are addressed in the same way as files
+and three files are automatically opened when a program executes to provide access to keyboard and screen.
+
+Standard File	|	File Pointer	|	Device
+----------------------------------------------------
+Standard input	|	stdin			|	Keyboard
+Standard output	| 	stdout			|	Screen
+Standard error	|	stderr			|	Your screen
+
+Ways to read from keyboard and print to screen:
+* )	getchar() and putchar()
+* )	gets() and puts()
+* )	scanf() and printf()
+
+int getchar (void), reads next available character from screen and returns it as an integer.
+If you want to read more than one character run this function in a loop.
+
+int putchar (int c), puts the passed character on the screen and return the same character.
+This function puts only single character at a time. To display more than one character run
+this function in a loop.
+
+char* gets(char * s), function reads a line from 'stdin' file into the buffer pointed to by 's'
+until either a terminating newline or EOF (End of File).
+Attention: gets() is deprecated!
+
+int puts(const char * s), function writes string 's' and a trailing newline to 'stdout' file.
+
+
+int scanf(const char * format, ...), function reads the input from the standard input stream 'stdin'
+ans scans that input according to the format provided.
+
+int printf(const char * format, ...), function writes the output to the standard output stream 'stdout'
+and produces the output according to the format provided.
