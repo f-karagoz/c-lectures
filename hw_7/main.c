@@ -1,7 +1,19 @@
+/*
+* Title:		C and System Programmer Associatiion
+*				C Programming Language Course - HW-7
+* Instructor:	Kaan Aslan
+* Author:		Furkan Karagoz
+* Date:			27 / 12 / 2022
+*/
+
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdbool.h>
 
-#define Q_2
+// To access the solution for the seconf question
+// change the define below to "Q_2" and compile again
+#define Q_1
 
 #ifdef Q_1
 
@@ -30,11 +42,11 @@ int main(void)
 
 	printf("This program collects real numbers from screen\nand does addition, substraction, and multiplication operation over them.\n\n");
 
-	printf("Enter first complex number: \n");
+	printf("Enter first complex number: ");
 	get_complex(&cplx1);
 	disp_complex(&cplx1);
 
-	printf("Enter second complex number: \n");
+	printf("Enter second complex number: ");
 	get_complex(&cplx2);
 	disp_complex(&cplx2);
 
@@ -56,12 +68,16 @@ int main(void)
 // CHECK THE DISP AND GET FUNCTIONS. MIGHT BE BROKEN.
 void disp_complex(struct Complex* pz)
 {
-	printf("%f, %fi\n", pz->real, pz->imag);
+	printf("%.2f, %.2fi\n", pz->real, pz->imag);
 }
 
 void get_complex(struct Complex* pz)
 {
-	scanf("%f %f", pz->real, pz->imag);
+	char c = 0;
+	scanf("%lf%lf", &pz->real, &pz->imag);
+	// clear the stdin file
+	while (c != '\n')
+		 c = getchar();
 }
 
 void add_complex(struct Complex* pz1, struct Complex* pz2, struct Complex* pz3)
@@ -104,11 +120,11 @@ struct Rect
 bool is_inside(struct Rect* r, struct Point* p);
 // Task2: Represent an intersected rectanglular object
 // intersect r1 and r2 and return to r3
-bool intersect_rect(struct rect* r1, struct rect* r2, struct rect* r3);
+bool intersect_rect(struct Rect* r1, struct Rect* r2, struct Rect* r3);
 
 int main(void)
 {
-	struct Point p1 = {3,3};
+	struct Point p1 = {3,4};
 	struct Rect r1 = {0,0,10,5};
 	struct Rect r2 = {3,2,13,7};
 	struct Rect r3;
@@ -136,7 +152,7 @@ bool is_inside(struct Rect* r, struct Point* p)
 // r1 is located upper left of the r2
 // the algorithm will not produce correct result if the r2 is
 // located left of the r1 etc.
-bool intersect_rect(struct rect* r1, struct rect* r2, struct rect* r3)
+bool intersect_rect(struct Rect* r1, struct Rect* r2, struct Rect* r3)
 {
     /*
      if common x axis part
@@ -146,7 +162,7 @@ bool intersect_rect(struct rect* r1, struct rect* r2, struct rect* r3)
         intersect false
      */
     
-    if (r2->x1 > r2->x1 && r2->x1 < r1->x2)
+    if (r2->x1 > r1->x1 && r2->x1 < r1->x2)
         if (r2->y1 > r1->y1 && r2->y1 < r1->y2)
         {
             r3->x1 = r2->x1;
