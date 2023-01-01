@@ -63,21 +63,23 @@ int main(void)
 	// "auto" is meaningless in the moden versions of C
 	// auto key word changed to a type specifier in c++11
 
+	// "register" is also meaningles in the current version of C
+	// Traditional Intel CPUs (CICK arhitecture) have 14 registers
+	// RISK architecture systems have more registers
+	// Registers' bit-lenght also defines how big proccesses can CPU handle
+	// World's firs microprocessor is accepted as Intel 8080 released in 1974.
+	// 8080 was 8-bit processor. Then; 16-bit 8086, 32-bit 80386, and 64-bit Pentium followed.
+	// Intel's 32-bit is called x32, and 64-bit processors called x64.
+	// ARM processors first designed as 32-bit, then they got upgraded to 54-bit as well.
+	// As there is no popular need for 128-bit processes, 128-bit processors are not common. (except GPUs)
+	// 
+	// c = a + b
+	// 
+	// MOV reg1, a
+	// MOV reg2, b
+	// ADD reg1, reg2
+	// MOV c, reg1
 
-	return 0;
-}
-
-#elif defined APP3
-
-int main(void)
-{
-	return 0;
-}
-
-#elif defined APP4
-
-int main(void)
-{
 	return 0;
 }
 
