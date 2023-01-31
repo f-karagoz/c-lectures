@@ -1,0 +1,142 @@
+Aþaðýdaki tarih zaman fonksiyonlarý "mytime.c" isimli bir dosya içerisinde yazýlacaktýr.
+Fonksiyonlarýn ptototipleri "mytime.h" dosyasý içeriisnde bulundurulacaktýr.
+mytime.h dosyasýnýn dokðmanýn sonunda verilmiþtir. 
+
+1)  localtime isimli standart C fonksiyonunu mylocaltime ismiyle yazýnýz:
+
+struct tm *localtime(time_t *pt);
+
+Buradaki time_t ve struct tm türleri <time.h> içerisinde include edilmiþtir. Doðrudan <time.h> 
+dosyasýný include edip bu türleri kullanabilirsiniz. Fonksiyonu aþaðýdaki kodla test edini:
+
+#include <stdio.h>
+#include "mytime.h"
+
+int main(void)
+{
+	time_t t;
+	struct tm *pt;
+	char *days[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+	t = time(NULL);
+	pt = mylocaltime(&t);
+
+	printf("%02d/%02d/%04d %02d:%02d:%02d - %s\n", pt->tm_mday, pt->tm_mon + 1, 
+pt->tm_year + 1900, pt->tm_hour, pt->tm_min, pt->tm_sec, days[pt->tm_wday]);
+	printf("%d\n", pt->tm_yday);
+
+	return 0;
+}
+
+struct tm yapýsýnýn tm_isdst elemanýný dikkate almayýnýz. Yani bu elemana -1 gibi bir deðer yerleþtirebilirsiniz.
+
+Açýklamalar
+
+- Fonksiyonu yazarken *pt deðerinin 01/01/1970'ten geçen saniye saniye sayýsý olduðu varsayýlacaktýr. 
+Aslýnda C standartlarýnda time fonksiyonundan elde edilen deðerin bu orijine iliþkin olduðu belirtilmemiþtir. 
+Ancak pek çok derleyici (Microsoft, gcc ve clang) bu orijini kabul etmektedir.
+UNIX/Linux sistemlerinde POSIX standartalarýnda epoch orijininin 01/01/1970 olduðu garanti edilmiþtir. 
+
+- Fonksiyonu yazacak kiþi olarak elinizde yalnýzca 01/01/1970'ten geçen saniye sayýsý vardýr. Bu deðeri 
+aritmetik iþlemlere sokarak tüm tarih bilgisine eriþebilirsiniz. 
+
+- Dönüþtürmeyi yaparken bir yýlýn artýk yýl olup olmadýðýný da tespit etmeniz gerekmektedir.
+Artýk yýl tespitinin aþaðýdaki gibi yapýldýðýný anýmsayýnýz:
+
+#include <stdbool.h>
+
+bool isleap(int year)
+{
+	return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+}
+
+2) ctime standart C fonksiyonunu myctime ismiyle yazýnýz. Fonksiyonun prototipi þöyle olmalýdýr:
+
+char *myctime(time_t *pt);
+
+Fonksiyonun geri döndürdüðü yazý orijinal ctime fonksiyonundaki gibi olacaktýr:
+
+Thu Jan 12 20:30:45 2023
+
+Açýklamalar
+
+- Fonksiyon static bir dizinin adresiyle geri dönmelidir. 
+
+- Fonksiyonu yazarken sprintf fonksiyonundan faydalanabilirsiniz. 
+
+- Fonksiyonda strftime fonksiyonundan faydalanmayýnýz. strftime ile sorunun çözümü çok kolaylaþmaktadýr.
+
+3) asctime standart C fonksiyonunu myasctime ismiyle yazýnýz. Fonksiyonun protototipi þöyle olmalýdýr:
+
+char *myasctime(struct tm *ptm);
+
+Tabii fonksiyonu sýfýrdan yazmanýza gerek yoktur. Zaten myctime fonksiyonunu yazdýðýnýza göre 
+bu fonksiyonu kolay bir biçimde yazabilirsiniz. Ya da önce myasctime fonksiyonunu yazýp myctime 
+fonksiyonunu bu fonksiyonu çaðýracak biçimde de yazabilirsiniz. - Fonksiyonda strftime fonksiyonundan faydalanmayýnýz.
+strftime ile sorunun çözümü çok kolaylaþmaktadýr.
+
+Bu sorular için iki dosya oluþturulacaktýr: "mytime.h" ve "mytime.c" dosyalarý. "mytime.c" dosyasýnda 
+fonksiyonlarýn kodlarý bulunacaktýr. Ancak main fonksiyonu bulunmayacaktýr. "mytime.h" dosyasýnda ise 
+fonksiyonlarýn prototipleri bulunacaktýr.
+"mytime.h" dosyasý hem "mytime.c" dosyasýndan hem de fonksiyonlarýn kullanýlacaðý modülden include edilecektir.
+"mytime.h" dosyasý aþaðýdaki gibi oluþturulmalýdýr:
+
+/* mytime.h */
+
+#ifndef MYTIME_H_
+#define MYTIME_H_
+
+#include <time.h>
+
+struct tm *mylocaltime(time_t *pt);
+char *myctime(time_t *pt);
+char *asctime(struct tm *ptm);
+
+#endif
+
+Buradaki #ifndef ile oluþturulan "include korumasýný (include guard)" henüz görmekdir. "mytime.c" dosyasý 
+þöyle oluþturulabilir:
+
+/* mytime.c */
+
+#include <stdio.h>
+#include "mytime.h"
+
+struct tm *mylocaltime(time_t *pt)
+{
+	...
+}
+
+
+
+
+char *myctime(time_t *pt)
+{
+	...
+}
+
+char *asctime(struct tm *ptm)
+{
+	...
+}
+
+Bu fonksiyonlarý "app.c" dosyasýnda main fonksiyonunu yazarak test ediniz. Dosya aþaðýdaki gibi 
+oluþturulabilir:
+
+/* app.c */
+
+#include <stdio.h>
+#include "mytime.h"
+
+int main(void)
+{
+	/* test kodu */
+
+	return 0;
+}
+
+Eðer IDE'de çalýþýyorsanýz projeniz içerisinde hem "mytime.c" dosyasý hem de "app.c" dosyasý 
+bulunuyor olmalý. Komut satýrýndan gcc ve clang derleyicileriyle þöyle derleme yapabilirsiniz:
+
+gcc -o app app.c mytime.c
+
