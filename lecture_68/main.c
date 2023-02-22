@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define APP3
+#define APP7
 
 #ifdef APP1
 /* Function Pointers - continued */
@@ -129,15 +129,141 @@ int main(void)
 #elif defined APP4
 /* Unions */
 
-int main(void)
+// Data structures similar to the structures but they differ within the construction
+// Structures allocate memory for all of its data contents (reagrding allignment).
+// Unions allocate memory for the largest data member of its members.
+// 
+// union Sample
+// {
+//	...
+// }
+// 
+// struct Sample	/* Invalid */
+// {
+//	...
+// }
+// 
+// int Sammple;		/* Valid */
+// 
+// union Sample s = {1,2,3}; /* Invalid */
+// 
+// union Sample k = {.b = 2} /* Valid */
+// 
+// ...end
+
+union Sample
 {
+	int a;
+	long b;
+	double c;
+};
+
+union Sample s;
+union Sample* ps;
+
+int main(void)
+{ 
+	s.a = 1;
+	s.b = 10;
+	s.c = 1.75;
+
+	printf("a: %d, b: %ld, c: %f\n", s.a, s.b, s.c);	/* a: 0, b: 0, c: 1.750000 */
+
+	printf("size is : %zd\n", sizeof(s));				/* 8 */
+
 	return 0;
 }
 
 #elif defined APP5
+/* utilzing unions */
+// unions are used in situations only one of the data is required from a group of data
+// How to determine which data is utilized in an union?
+// There is no standard way. We need to log that info.
+
+enum {CINFO_TELLNO, CINFO_TCID, CINFO_EMAIL};
+
+struct Person
+{
+	char name[64];
+	int no;
+	int cinfo_flag;
+	union
+	{
+		char tellno[11];
+		char tcid[12];
+		char email[64];
+	} cinfo;
+};
+
+struct Person per = { "Alir Serce", 123, CINFO_EMAIL, {.email="bob@gmail.com"}};
 
 int main(void)
 {
+
+	return 0;
+}
+
+#elif defined APP6
+/* Complete Data From Parts - Unions */
+#include <stdint.h>
+
+// Parts can be changed depending on the system's endiannnes
+
+union DWORD
+{
+	uint32_t dword;
+	uint8_t bytes[4];
+};
+
+union DWORD dw;
+
+int main(void)
+{
+	dw.dword = 0x12345678;
+
+	printf("%02X %02X %02X %02X\n", dw.bytes[0], dw.bytes[1], dw.bytes[2], dw.bytes[3]);
+	/* 78 56 34 12 */
+	printf("%08lX\n", (unsigned long)dw.dword);
+	/* 12345678 */
+
+	return 0;
+}
+
+#elif defined APP7
+/* struct part of a union */
+#include <stdint.h>
+
+struct Bytes
+{
+	uint8_t b0;
+	uint8_t b1;
+	uint8_t b2;
+	uint8_t b3;
+};
+
+union DWORD
+{
+	uint32_t dword;
+	struct Bytes bytes;
+};
+
+union DWORD dw;
+
+int main(void)
+{
+	dw.dword = 0x12345678;
+
+	printf("%02X %02X %02X %02X\n", dw.bytes.b0, dw.bytes.b1, dw.bytes.b2, dw.bytes.b3);
+	/* 78 56 34 12 */
+
+	dw.bytes.b0 = 0x10;
+	dw.bytes.b1 = 0x20;
+	dw.bytes.b2 = 0x30;
+	dw.bytes.b3 = 0x40;
+
+	printf("%08lX\n", (unsigned long)dw.dword);
+	/* 40302010 */
+
 	return 0;
 }
 
