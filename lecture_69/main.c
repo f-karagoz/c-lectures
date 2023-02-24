@@ -1,6 +1,9 @@
 #include <stdio.h>
 
-#define APP_8
+#define APP_10
+
+
+#ifdef APP_1
 /* Compound Literals */
 
 // Added to C in C99
@@ -19,10 +22,6 @@
 // 
 // (<type>) {<member_list>}
 // ...end
-
-
-#ifdef APP_1
-/* Compound Literals */
 
 struct Point
 {
@@ -166,39 +165,59 @@ int main(void)
 #elif defined APP_8
 /* Bitwise operators */
 
-// ~ (bit NOT)
-// & (bit AND)
-// & (bit EXOR)
-// | (bit OR)
-// << (shift left)
-// >> (shift right)
+// ~	(bit NOT)
+// &	(bit AND)
+// &	(bit EXOR)
+// |	(bit OR)
+// <<	(shift left)
+// >>	(shift right)
+// 
+// If both operands are lower than int
+// the result will be upgraded to the int type
 // 
 // ...end
 
 int main(void)
 {
-	// TBC 21:44
+	unsigned char a = 0x3F;		/* 0011 1111 */
+	unsigned char b = 0x77;		/* 0111 0111 */
+	unsigned char c;
+
+	c = a & b;					/* 0011 0111 = 0x37 */
+
+	printf("%02X\n", c);	/* 37 */
+
 	return 0;
 }
 
 #elif defined APP_9
+#include <stdint.h>
+/* bit masking OR one hot */
 
 int main(void)
 {
+	uint8_t a = 0x3F;		/* 0011 1111 */
+	
+	if (a & 0x20)
+		printf("5th bit is 1\n");
+	else
+		printf("5th bit is 0\n");
+
 	return 0;
 }
 
 #elif defined APP_10
+#include <stdint.h>
+/* bit clear */
 
 int main(void)
 {
+	uint8_t a = 0x3F;		/* 0011 1111 */
+
+	a = a & 0xEF;			/* 0010 1111 = 0x2F */
+	printf("%02X\n", a);	/* 2F */
+
 	return 0;
 }
 
-#elif defined APP_11
-
-int main(void)
-{
-	return 0;
-}
 #endif
