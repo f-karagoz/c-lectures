@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define APP1
+#define APP2
 
 #ifdef APP1
 /* Bitfileds */
@@ -48,13 +48,36 @@ int main(void)
 }
 
 #elif defined APP2
+/* Bitfileds Memory Optimization */
+// Multiple elements of a single structure with bitfileds
+// can be structured together to optimize the memory storage.
+
+struct Sample
+{
+	int a1 : 5;
+	int b1 : 6;
+	int c1 : 7;
+	int a2 : 5;
+	int b2 : 6;
+	int c2 : 7;
+};
 
 int main(void)
 {
+	struct Sample s[1000000];
 	return 0;
 }
 
 #elif defined APP3
+/* Padding Bits */
+
+struct Sample
+{
+	int a : 3;		/* Bitfield */
+	int : 5;		/* Padding */
+	int b : 3;		/* Bitfield */
+	int : 5;		/* Padding */
+};
 
 int main(void)
 {
@@ -62,6 +85,32 @@ int main(void)
 }
 
 #elif defined APP4
+/* Alignment Bitfield */
+// 0 length bit field means that the next bitfield will be aligned.
+
+struct Sample
+{
+	int a : 5;		/* Bitfield */
+	int : 0;		/* Alignment */
+	int b : 7;		/* Bitfield */
+};
+
+int main(void)
+{
+	return 0;
+}
+
+#elif defined APP5
+/* File Operations */
+//
+// Users access the files via names. The organization of the files
+// is handled by the OS. Files can be stored under directories, the path is the exact
+// location of a file.
+// 
+// In Windows every disk has its own root. When a flash disc is inserted it has its own 'root'.
+// This units are called 'drive' in Windows. Unix/Linux systems do not use the drive system.
+// In Unix when a disk is inserted it is 'mount'ed under a directory.
+// ...end...
 
 int main(void)
 {
